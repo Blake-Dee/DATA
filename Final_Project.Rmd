@@ -1,0 +1,53 @@
+---
+title: "Final_Project"
+author: "Blake Dee"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+caffeineData<-read_xlsx("C:/DATA211/DataSets/Caffeine Intake Analysis.xlsx")
+```
+
+## ggplots
+
+# Boxplot
+
+```{r}
+caffeineData%>%
+  ggplot(aes(x=`Day Type`, y=`Caffeine Intake (mg)`))+geom_boxplot() +labs(title = "Caffeine Intake: Work vs. School Days", x= "Day Type", y= "Caffeine Intake (mg)")
+```
+Here, we can see that the means are roughly the same. The only different is that there is a larger range of caffeine intake on school days than that of work days. Interestingly, despite the outlier of 34(mg), the outlier was not included as an outlier, but as a member of the range.
+
+
+# Scatter plot with regression
+```{r}
+caffeineData%>%
+  ggplot(aes(x=`DATE`,y=`Caffeine Intake (mg)`)) +geom_point(aes(color=`Day Type`)) +geom_smooth(method="lm",se=FALSE) +labs(title ="Caffeine Intake by Day",x="Date",y="Caffeine Intake (mg)")
+```
+This better shows how the results of the distribution over time. I found it interesting to see the regression line sloping downwards throughout the observation days.
+
+
+## Hypothesis Test
+
+$\mu_{school}$: Mean amount of caffeine intake (mg) during school days
+$\mu_{work}$: Mean amount of caffeine intake (mg) during work days
+
+$H_0: \ \mu_{school} = \mu_{work}$ vs $H_\alpha: \ \mu_{school} \neq \mu_{work}$
+$\alpha=0.05$
+
+```{r}
+t.test(`Caffeine Intake (mg)` ~ `Day Type`, data = caffeineData, alternative="two.sided")
+```
+
+The $p-value=0.7683$ which is greater than $\alpha=0.05$. Based on a significance level of 5%, we fail to reject the $H_0$. We do not have enough evidence to conclude that there is a difference between caffeine intake on work days versus school days.
