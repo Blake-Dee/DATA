@@ -33,7 +33,7 @@ Here, we can see that the means are roughly the same. The only different is that
 # Scatter plot with regression
 ```{r}
 caffeineData%>%
-  ggplot(aes(x=`DATE`,y=`Caffeine Intake (mg)`)) +geom_point(aes(color=`Day Type`)) +geom_smooth(method="lm",se=FALSE) +labs(title ="Caffeine Intake by Day",x="Date",y="Caffeine Intake (mg)")
+  ggplot(aes(x=`Observation`,y=`Caffeine Intake (mg)`)) +geom_point(aes(color=`Day Type`)) +geom_smooth(method="lm",se=FALSE) +labs(title ="Caffeine Intake by Day",x="Day",y="Caffeine Intake (mg)")
 ```
 This better shows how the results of the distribution over time. I found it interesting to see the regression line sloping downwards throughout the observation days.
 
